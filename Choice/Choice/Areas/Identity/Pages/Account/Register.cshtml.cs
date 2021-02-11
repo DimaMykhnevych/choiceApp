@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Choice.Areas.Identity.Pages.Account
 {
@@ -60,6 +61,8 @@ namespace Choice.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public bool IsAdmin { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -76,6 +79,12 @@ namespace Choice.Areas.Identity.Pages.Account
             {
                 var user = new Student { UserName = Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                if (Input.IsAdmin)
+                {
+                    await _userManager.AddToRoleAsync(user, "admin");
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
