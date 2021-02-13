@@ -1,0 +1,41 @@
+﻿@model Choice.Models.Student
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Selected Disciplines</h1>
+
+<p>
+    <a asp-action="SelectDisciplines" asp-route-id="@Model.Id">Select Discipline</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Disciplines)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disciplines[0].Teacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disciplines[0].Annotation)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Disciplines)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

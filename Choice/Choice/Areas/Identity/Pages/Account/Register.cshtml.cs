@@ -84,6 +84,10 @@ namespace Choice.Areas.Identity.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(user, "admin");
                 }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "student");
+                }
 
                 if (result.Succeeded)
                 {

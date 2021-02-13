@@ -19,6 +19,23 @@ namespace Choice.Controllers
         {
             return View(_userManager.Users);
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var student = await _userManager.FindByIdAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return View(student);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -34,6 +51,7 @@ namespace Choice.Controllers
                 var res = await _userManager.CreateAsync(student, "Aa_1234");
                 if (res.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(student, "student");
                     return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("UserName", "Student was not created");

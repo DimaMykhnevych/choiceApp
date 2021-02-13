@@ -87,6 +87,8 @@ namespace Choice
             {
                 if (!roleManager.RoleExistsAsync("admin").Result)
                     roleManager.CreateAsync(new IdentityRole("admin")).Wait();
+                if (!roleManager.RoleExistsAsync("student").Result)
+                    roleManager.CreateAsync(new IdentityRole("student")).Wait();
             }
             catch { }
         }
